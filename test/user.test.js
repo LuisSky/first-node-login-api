@@ -10,3 +10,12 @@ test('list users', () => {
       expect(res.body[0]).toHaveProperty('name', 'Guilherme Abrantes');
     });
 });
+
+test('insert user post method', () => {
+  return request(app).post('/users')
+    .send({ name: 'Sky Nesk', mail: 'sky@mail.com' })
+    .then((res) => {
+      expect(res.status).toBe(201);
+      expect(res.body).toHaveProperty('name', 'Sky Nesk');
+    });
+});
