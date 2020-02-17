@@ -4,6 +4,7 @@
   "description": "RestApi",
   "main": "src/server.js",
   "scripts": {
+    "start": "node src/server.js",
     "test": "jest",
     "lint": "eslint src/** test/** --fix"
   },
@@ -14,7 +15,8 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "supertest": "3.3.0"
   },
   "dependencies": {
     "express": "^4.17.1"
