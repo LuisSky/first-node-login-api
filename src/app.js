@@ -1,21 +1,14 @@
 const app = require('express')();
-const bodyParser = require('body-parser');
+const consign = require('consign');
 
-app.use(bodyParser.json());
+consign({ cwd: 'src', verbose: false })
+  .include('./config/middlewares.js')
+  .then('./routes/')
+  .then('./config/router.js')
+  .into(app);
 
 app.get('/', (req, res) => {
   return res.status(200).send('Hello World');
-});
-
-app.get('/users', (req, res) => {
-  const users = [
-    { name: 'Guilherme Abrantes', mail: 'guilherme@mail.com' },
-  ];
-  res.status(200).json(users);
-});
-
-app.post('/users', (req, res) => {
-  res.status(201).json(req.body);
 });
 
 module.exports = app;
