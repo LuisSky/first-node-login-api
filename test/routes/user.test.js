@@ -28,3 +28,21 @@ test('Blocking null name submission', () => {
       expect(res.body.error).toBe('Name is mandatory submission');
     });
 });
+
+test('Blocking null mail submission', () => {
+  return request(app).post('/users')
+    .send({ name: 'User Testing', password: '123456' })
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Mail is mandatory submission');
+    });
+});
+
+test('Blocking null password submission', () => {
+  return request(app).post('/users')
+    .send({ name: 'User Testing', mail: 'user@mail.com' })
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Password is mandatory submission');
+    });
+});
