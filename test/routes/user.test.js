@@ -2,6 +2,8 @@ const request = require('supertest');
 
 const app = require('../../src/app');
 
+const mail = `${Date.now()}@mail.com`;
+
 test('list users', () => {
   return request(app).get('/users')
     .then((res) => {
@@ -11,12 +13,11 @@ test('list users', () => {
 });
 
 test('insert user for post method', () => {
-  const mail = `${Date.now()}@mail.com`;
   return request(app).post('/users')
-    .send({ name: 'Sky Nesk', mail, password: '123456' })
+    .send({ name: 'User Testing', mail, password: '123456' })
     .then((res) => {
       expect(res.status).toBe(201);
-      expect(res.body[0]).toHaveProperty('name', 'Sky Nesk');
+      expect(res.body[0]).toHaveProperty('name', 'User Testing');
     });
 });
 
@@ -44,5 +45,14 @@ test('Blocking null password submission', () => {
     .then((res) => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Password is mandatory submission');
+    });
+});
+
+test('Blocking submission existing mail', () => {
+  return request(app).post('/users')
+    .send({ name: 'User Testing', mail, password: '123456' })
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Mail is already registered');
     });
 });
