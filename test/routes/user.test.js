@@ -18,7 +18,18 @@ test('insert user for post method', () => {
     .then((res) => {
       expect(res.status).toBe(201);
       expect(res.body[0]).toHaveProperty('name', 'User Testing');
+      expect(res.body[0]).not.toHaveProperty('password');
     });
+});
+
+test('Encrypted password', async () => {
+  const res = await request(app).post('/users')
+    .send({ name: 'User Testing', mail: `${Date.now()}@mail.com`, password: '123456' });
+  expect(res.status).toBe(201);
+
+  const { id } = res.body[0];
+  const UserDB = await app.services.user.findOne({ id });
+  expect(UserDB.password).not.toBe('123456');
 });
 
 test('Blocking null name submission', () => {
