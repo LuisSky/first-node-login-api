@@ -5,10 +5,9 @@ const app = require('../../src/app');
 const mail = `${Date.now()}@mail.com`;
 
 test('list users', async () => {
-  await request(app).post('/users')
-    .send({ name: 'User Testing', mail: `${Date.now()}@mail.com`, password: '123456' });
-
-  return request(app).get('/users')
+  return request(app).post('/users')
+    .send({ name: 'User Testing', mail: `${Date.now()}@mail.com`, password: '123456' })
+    .then(() => request(app).get('/users'))
     .then((res) => {
       expect(res.status).toBe(200);
       expect(res.body.length).toBeGreaterThan(0);
