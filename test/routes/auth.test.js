@@ -21,7 +21,7 @@ test('lock wrong password', () => {
       .send({ mail, password: '654321' }))
     .then((res) => {
       expect(res.status).toBe(400);
-      expect(res.body.error).toBe('Inválid user and password');
+      expect(res.body.error).toBe('Invalid user and password');
     });
 });
 
@@ -31,5 +31,12 @@ test('lock mail non existence', () => {
     .then((res) => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Invalid user and password');
+    });
+});
+
+test('must not access a tokenless route', () => {
+  return request(app).get('/users')
+    .then((res) => {
+      expect(res.status).toBe(401); // Acess not autorized.
     });
 });
