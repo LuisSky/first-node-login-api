@@ -5,7 +5,7 @@ const ValidationError = require('../../src/errors/ValidationError.js');
 const secretCode = 'inGodITrust';
 
 module.exports = (app) => {
-  const singin = (req, res, next) => {
+  const signin = (req, res, next) => {
     app.services.user.findOne({ mail: req.body.mail })
       .then((user) => {
         if (!user) throw new ValidationError('Invalid user and password');
@@ -22,5 +22,5 @@ module.exports = (app) => {
       })
       .catch((err) => next(err));
   };
-  return { singin };
+  return { signin };
 };
