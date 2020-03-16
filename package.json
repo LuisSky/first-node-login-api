@@ -7,7 +7,7 @@
     "start": "node src/server.js",
     "test": "jest",
     "lint": "eslint src/** test/** --fix",
-    "secure-mode": "jest --watch --verbose=false"
+    "secure-mode": "jest --watch --verbose=true"
   },
   "keywords": [],
   "author": "Guilherme Abrantes",
@@ -26,8 +26,8 @@
     "express": "^4.17.1",
     "jwt-simple": "0.5.5",
     "knex": "0.15.2",
-    "passport": "0.4.1",
-    "passport-jwt": "4.0.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "pg": "7.7.1"
   }
 }

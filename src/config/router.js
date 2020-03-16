@@ -1,9 +1,10 @@
-module.exports = (app) => {
-  app.route('/auth/signin').post(app.routes.auth.signin);
-  app.route('/auth/signup').post(app.routes.users.create);
+const express = require('express');
 
-  app.route('/users')
-    .all(app.config.passport.authenticate())
-    .get(app.routes.users.findAll)
-    .post(app.routes.users.create);
+module.exports = (app) => {
+  app.use('/auth', app.routes.auth);
+
+  const protectedRoute = express.Router();
+  protectedRoute.use('/users', app.routes.users);
+
+  app.use(app.config.passport.authenticate(), protectedRoute);
 };
