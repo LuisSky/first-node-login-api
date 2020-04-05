@@ -24,7 +24,8 @@ module.exports = (app) => {
     const copyUser = { ...user };
     copyUser.password = await genHashPassword(user.password);
 
-    return app.db('users').insert(copyUser, ['id', 'name', 'mail']);
+    const newUser = await app.db('users').insert(copyUser, ['id', 'name', 'mail']);
+    return newUser[0];
   };
   return { findOne, findAll, save };
 };
